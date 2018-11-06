@@ -34,8 +34,20 @@ def findv(rhs,t_i,t_f,l):
     return v
 
 def find_r(r_i,v,t_i,t_f):
-    y0 = r_i;
-    r = RK45(v,t_i,y0,t_f)
+    dt = (t_f-t_i)/v.size
+    r = zeros(v.shape)
+    r[0] = r_i
+    for i in (range(1,v.size)):
+        r[i] = r[i-1] + v[i-1]*dt
     return r
 
-
+def simulate_maxwell(n):
+    t0 = 0
+    t1 = 1
+    l = 10
+    noise = zeros(n)
+    for i in range(n):
+        noise[i]= sqrt(2)*random.normal()
+    v = findv(noise,t0,t1,l)
+    r = find_r(0,v,0,1)
+    return r
