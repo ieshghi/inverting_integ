@@ -47,16 +47,12 @@ def find_r(r_i,v,t_i,t_f):
     return r
 
 def corrnoise(n,l):
-    whitenoise = sqrt(2)*randn(n)
-    nums = zeros(n)
-    nums[0] = whitenoise[0]
-    b = l
-    
+    c = exp(-l)
+    nums_out = zeros(n)
+    g = randn(n)
     for i in range(1,n):
-        a = -l*nums[i-1]
-        nums[i] = nums[i-1] + a + b*whitenoise[i]
-    
-    nums_out = nums/sqrt(l)
+        nums_out[i] = nums_out[i-1]*c + sqrt(1-c**2)*g[i]
+
     return nums_out
 
 def simulate_maxwell(n):
