@@ -1,6 +1,5 @@
 from numpy import *
 import matplotlib.pyplot as plt
-from scipy.integrate import RK45
 from numpy.random import randn
 import numpy as np
 
@@ -9,7 +8,6 @@ def int_weights(n,dx = 1,method = 0):
         a = dx*ones(n)
         a[0] = dx/2
         a[-1] = dx/2
-        a = a
     elif method == 1: 
         a = dx*ones(n)
         a[1::2] = dx*4./3
@@ -56,14 +54,14 @@ def corrnoise(n,l):
     return nums_out
 
 def simulate_maxwell(n,l):
-    t0 = 0
-    t1 = 1
+    t0 = 0.
+    t1 = 1.
     noise_x = corrnoise(n,l)
     noise_y = corrnoise(n,l)
     vx = findv(noise_x,t0,t1,l)
     vy = findv(noise_y,t0,t1,l)
-    rx = find_r(0,vx,0,1)
-    ry = find_r(0,vy,0,1)
+    rx = find_r(0.,vx,t0,t1)
+    ry = find_r(0.,vy,t0,t1)
     return rx,ry
 
 def msd(trajx,trajy):
